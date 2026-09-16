@@ -282,7 +282,7 @@ CUSTOS enforces secure session authentication and Role-Based Access Control:
 
 | Role | Default Username | Default Password | Permissions |
 | :--- | :--- | :--- | :--- |
-| **Administrator** | `admin` | `Varun@admin` | Full access: user management, security config, face enrollment, incident resolution. |
+| **Administrator** | `admin` | `txt me i will tell` | Full access: user management, security config, face enrollment, incident resolution. |
 | **Operator** | `operator` | `operator123` | Operational access: live monitoring, zone setup, alert resolution, evidence export. |
 | **Viewer** | `viewer` | `viewer123` | Read-only access: live feed, read alerts, and view evidence. |
 
