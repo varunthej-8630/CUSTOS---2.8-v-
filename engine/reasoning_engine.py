@@ -1,10 +1,4 @@
-# engine/reasoning_engine.py — Deprecated compatibility wrapper
-from typing import List, Dict, Any
+# engine/reasoning_engine.py — Backward-compatible wrapper
+from archive.legacy.engine.reasoning_engine import ReasoningEngine
 
-class ReasoningEngine:
-    """
-    Deprecated: Unvalidated probabilistic multipliers are replaced by RiskEngine evaluation.
-    Kept as pass-through for backwards compatibility.
-    """
-    def process(self, predictions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        return predictions
+__all__ = ['ReasoningEngine']

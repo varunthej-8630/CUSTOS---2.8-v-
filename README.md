@@ -1,517 +1,438 @@
-# CUSTOS 2.7 — Edge AI Autonomous Threat Detection & Incident Intelligence Platform
+# CUSTOS 2.8 — Autonomous Edge AI Threat Detection & People Intelligence Platform
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/)
-[![Tests](https://img.shields.io/badge/tests-85%2F85%20passed-success.svg)](https://github.com/)
+[![Tests](https://img.shields.io/badge/tests-passing%20%28100%25%29-success.svg)](https://github.com/)
 [![Python Version](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://python.org)
-[![Framework](https://img.shields.io/badge/framework-Flask%20%7C%20Socket.IO%20%7C%20OpenCV%20%7C%20YOLOv8-orange.svg)](https://github.com/)
+[![Framework](https://img.shields.io/badge/framework-Flask%20%7C%20Socket.IO%20%7C%20OpenCV%20%7C%20YOLOv8%20%7C%20YuNet%20%7C%20SFace-orange.svg)](https://github.com/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**CUSTOS** is a production-grade, real-time Computer Vision & Edge AI security system designed for automated perimeter defense, zone intrusion detection, physical camera tamper protection, and verifiable video evidence generation.
-
-Built on top of a zero-mock, SQLite-backed architecture, CUSTOS bridges low-latency frame processing with an end-to-end Incident Lifecycle Engine, providing security operators with an instant Command Center, synchronized Alert Center, and full Evidence Review Center.
+**CUSTOS** is an enterprise-grade, edge-deployed autonomous Computer Vision & AI Security Platform. Designed for mission-critical physical perimeter defense, CUSTOS unifies real-time object tracking, multi-camera zone monitoring, 7-condition optical tamper protection, biometric face intelligence, and zero-spam incident lifecycle orchestration into a unified security command center.
 
 ---
 
-## Table of Contents
-1. [Key Capabilities](#key-capabilities)
-2. [System Architecture](#system-architecture)
-3. [Incident, Alert & Evidence Lifecycle](#incident-alert--evidence-lifecycle)
-4. [Project Structure](#project-structure)
-5. [Prerequisites & Requirements](#prerequisites--requirements)
-6. [Installation & Setup](#installation--setup)
-7. [Running the Application](#running-the-application)
-8. [Web Dashboard & Navigation](#web-dashboard--navigation)
-9. [REST API Documentation](#rest-api-documentation)
-10. [Socket.IO Real-Time Events](#socketio-real-time-events)
-11. [Configuration & Environment Variables](#configuration--environment-variables)
-12. [Automated Testing Suite](#automated-testing-suite)
-13. [Real Camera Acceptance Test Protocol](#real-camera-acceptance-test-protocol)
-14. [Windows Startup & Auto-Run Configuration](#windows-startup--auto-run-configuration)
+## 📑 Table of Contents
+
+1. [Key Platform Capabilities](#-key-platform-capabilities)
+2. [High-Level Architecture](#-high-level-architecture)
+3. [Deep-Dive Core Modules](#-deep-dive-core-modules)
+   - [AI Perception & Multi-Object Tracking](#1-ai-perception--multi-object-tracking)
+   - [Biometric Face Intelligence & Identity Layer](#2-biometric-face-intelligence--identity-layer)
+   - [7-Condition Optical Tamper Engine & 15s Circular Pre-Roll](#3-7-condition-optical-tamper-engine--15s-circular-pre-roll)
+   - [Zero-Spam Incident Lifecycle & State Machine](#4-zero-spam-incident-lifecycle--state-machine)
+   - [Verifiable Evidence Capture Pipeline](#5-verifiable-evidence-capture-pipeline)
+4. [Web Command Center & User Interface](#-web-command-center--user-interface)
+5. [Project Structure](#-project-structure)
+6. [Prerequisites & System Requirements](#-prerequisites--system-requirements)
+7. [Installation & Setup Guide](#-installation--setup-guide)
+8. [Running the Application](#-running-the-application)
+9. [Default Authentication & RBAC](#-default-authentication--rbac)
+10. [REST API Reference](#-rest-api-reference)
+11. [Socket.IO Real-Time Event Protocol](#-socketio-real-time-event-protocol)
+12. [Configuration Reference](#-configuration-reference)
+13. [Testing & Verification Protocol](#-testing--verification-protocol)
+14. [Production Deployment & Windows Service Setup](#-production-deployment--windows-service-setup)
 
 ---
 
-## Key Capabilities
+## 🚀 Key Platform Capabilities
 
-### 1. High-Accuracy AI Perception & Multi-Object Tracking
-- **YOLOv8 Vision Perception**: Detects persons, bags, and secondary objects with calibrated confidence filtering.
-- **Persistent Multi-Object Tracking**: Trajectory smoothing and track ID maintenance across temporary micro-occlusions.
-- **Dynamic Dual-Zone Monitoring**: Supports **HIGH SECURITY** (instant breach detection) and **OBSERVATION / WATCH** zones (dwell tracking and behavioral escalation).
-
-### 2. Zero-Spam Incident Lifecycle State Machine
-- **Deterministic Deduplication**:
-  - Person/Zone Breach: `("zone", camera_id, subject_id, zone_name, "ZONE_BREACH")`
-  - Camera Tamper: `("tamper", camera_id, "TAMPER")`
-- **Zero Duplicate Alerts**: When a person stays inside a HIGH zone or a camera remains covered, CUSTOS maintains **ONE canonical Incident** and **ONE active Alert**, updating duration and timeline in real-time without alert spam.
-- **Resilient Exit Grace Period**: Tracks leaving zones enter a configurable grace period ($3.0\text{--}5.0\,\text{s}$) to prevent track flicker from fracturing incidents.
-
-### 3. 7-Condition Optical Tamper Detection & 15-Second Pre-Roll
-- **Optical Conditions Detected**:
-  1. Lens Obstruction (Laplacian blur variance drop)
-  2. Lens Covering / Sudden Darkness (Mean intensity drop)
-  3. Camera Shift / Displacement (Frame delta vs. background reference)
-  4. Video Signal Lost / Disconnection
-  5. Frame Freezing (Consecutive identical frames)
-  6. Sudden Brightness / Flare
-  7. Sudden Darkness Shock
-- **Temporal State Confirmation**: Requires sustained abnormal states ($0.8\,\text{s}$) before confirming tamper, preventing transient glitches from triggering false alarms.
-- **Rolling In-Memory Circular Frame Buffer**: Continuously maintains $\approx 15\,\text{seconds}$ of raw camera footage ($\approx 375\text{--}450$ frames).
-- **Comprehensive Tamper MP4 Evidence**: Final tamper video contains:
-  $$\text{15s Pre-Tamper Footage} + \text{Trigger Moment} + \text{Obstruction Duration} + \text{Recovery Footage}$$
-
-### 4. Verifiable Media Verification Pipeline
-- **Strict Post-Write Integrity**: Every JPEG snapshot and MP4 video is verified on disk (`file_size > 0`, `cv2.imread` dimensions valid, `cv2.VideoCapture` container readable).
-- **Honest State Reporting**: Sets `snapshot_status='AVAILABLE'|'FAILED'` and `video_status='AVAILABLE'|'RECORDING'|'FAILED'`. No fake video players or broken placeholders.
+- **Real-Time Edge Perception**: YOLOv8-powered multi-class perception (persons, vehicles, backpacks, anomalous objects) with temporal track smoothing.
+- **Biometric Face Intelligence (Stage 2.8)**: YuNet face detection, 5-point landmark alignment, and SFace 128-dimensional embedding matching ($\ge 0.40$ cosine threshold) with dynamic quality assessment.
+- **Automated Face Clustering**: Agglomerative clustering of unrecognized individuals across camera feeds into persistent cluster profiles with single-click conversion to permanent identities.
+- **Watchlist & Suspicious Identity Escalation**: Three-tier classification (`KNOWN`, `UNKNOWN`, `SUSPICIOUS`) with instant alert triggers and audio dispatch upon watchlist detection.
+- **7-Condition Optical Tamper Detection**: Instant detection of lens covering, spray/defocusing, camera shift/displacement, disconnection, freezing, brightness flare, and darkness shock.
+- **15-Second Circular In-Memory Pre-Roll**: Circular frame buffer preserving $15\,\text{seconds}$ of footage prior to incident trigger for forensic pre-roll evidence video generation.
+- **Zero-Spam Incident State Machine**: Deterministic deduplication ensuring one continuous incident per breach/tamper event with exit grace tracking and live dwell timers.
+- **Forensic Video & Snapshot Evidence**: Auto-generated trigger JPEGs and MP4 video recordings verified with on-disk integrity checks.
+- **Role-Based Access Control (RBAC)**: Enterprise security model featuring `Admin`, `Operator`, and `Viewer` tiers.
 
 ---
 
-## System Architecture
+## 🏛 High-Level Architecture
 
 ```
                                ┌────────────────────────┐
                                │  Camera VideoCapture   │
+                               │  (RTSP / WebCam / File)│
                                └───────────┬────────────┘
-                                           │ (Single Frame Read)
-                     ┌─────────────────────┴─────────────────────┐
-                     ▼                                           ▼
-         ┌───────────────────────┐                   ┌───────────────────────┐
-         │ Rolling 15s Pre-Roll  │                   │ Temporal Tamper       │
-         │ Circular Frame Buffer │                   │ Detection Engine      │
-         └───────────┬───────────┘                   └───────────┬───────────┘
-                     │                                           │
-                     ▼                                           ▼
-         ┌───────────────────────────────────────────────────────────┐
-         │ YOLOv8 Perception + Multi-Object Tracker + Zone Monitor   │
-         └─────────────────────────────┬─────────────────────────────┘
-                                       │
-                                       ▼
-         ┌───────────────────────────────────────────────────────────┐
-         │             Incident Lifecycle Manager                    │
-         │  - Deterministic Key Deduplication                        │
-         │  - Instant Trigger Snapshot Capture & Verification        │
-         │  - MP4 Video Recording (Pre-Roll + Live + Post-Grace)     │
-         │  - Continuous Dwell & Timeline Updates                    │
-         └──────────────┬─────────────────────────────┬──────────────┘
-                        │                             │
-                        ▼                             ▼
-         ┌────────────────────────────┐ ┌────────────────────────────┐
-         │ SQLite ORM Persistence     │ │ Flask-SocketIO Realtime    │
-         │ (models.py, database_mgr)  │ │ (alert_created, evidence)  │
-         └──────────────┬─────────────┘ └─────────────┬──────────────┘
-                        │                             │
-                        ▼                             ▼
-         ┌───────────────────────────────────────────────────────────┐
-         │     CUSTOS Unified Web Interface (Port 5000)              │
-         │  [Live Monitor]   [Alert Center]   [Evidence Center]      │
-         └───────────────────────────────────────────────────────────┘
+                                           │ (Single Frame Pipeline)
+                      ┌────────────────────┴────────────────────┐
+                      ▼                                         ▼
+          ┌───────────────────────┐                 ┌───────────────────────┐
+          │ Rolling 15s Pre-Roll  │                 │ Temporal Tamper       │
+          │ Circular Frame Buffer │                 │ Detection Engine      │
+          └───────────┬───────────┘                 └───────────┬───────────┘
+                      │                                         │
+                      ▼                                         ▼
+          ┌─────────────────────────────────────────────────────────────────┐
+          │                      Perception Pipeline                        │
+          │  ┌───────────────────────────┐   ┌───────────────────────────┐  │
+          │  │ YOLOv8 Object Tracking    │   │ YuNet + SFace Biometrics  │  │
+          │  │ (Persons, Bags, Vehicles) │   │ (Face Recog & Clustering) │  │
+          │  └─────────────┬─────────────┘   └─────────────┬─────────────┘  │
+          └────────────────┼───────────────────────────────┼────────────────┘
+                           │                               │
+                           └───────────────┬───────────────┘
+                                           ▼
+          ┌─────────────────────────────────────────────────────────────────┐
+          │             Incident Lifecycle Manager & State Machine          │
+          │  - Deterministic Key Deduplication ("zone:cam:subject:name")    │
+          │  - Trigger Snapshot Capture & Verification                      │
+          │  - Dynamic Risk Scoring & Dwell-Time Escalation                 │
+          │  - Post-Grace MP4 Video Staged Assembly (Pre + Event + Post)    │
+          └──────────────┬───────────────────────────────────┬──────────────┘
+                         │                                   │
+                         ▼                                   ▼
+          ┌────────────────────────────┐       ┌────────────────────────────┐
+          │ SQLite ORM Persistence     │       │ Flask-SocketIO Realtime    │
+          │ (WAL Mode, Thread-Safe)    │       │ (Alerts, Threats, Live AI) │
+          └──────────────┬─────────────┘       └─────────────┬──────────────┘
+                         │                                   │
+                         └─────────────────┬─────────────────┘
+                                           ▼
+                         ┌───────────────────────────────────┐
+                         │  CUSTOS Command Center Frontend   │
+                         │  (Vanilla JS, Dark Modern Glass)  │
+                         └───────────────────────────────────┘
 ```
 
 ---
 
-## Incident, Alert & Evidence Lifecycle
+## 🔬 Deep-Dive Core Modules
 
-CUSTOS maintains a strict 1-to-1 canonical relationship:
+### 1. AI Perception & Multi-Object Tracking
+- **Detection Model**: YOLOv8 neural network optimized for low latency on edge CPUs and CUDA GPUs.
+- **Dynamic Dual-Zone Monitoring**:
+  - **HIGH SECURITY Zone (Red)**: Instant perimeter breach alarm triggering immediate incident recording and operator dispatch.
+  - **OBSERVATION / WATCH Zone (Orange/Green)**: Loitering and dwell-time monitoring with automated score escalation.
+- **Track Smoothing**: Maintains persistent identity across brief line-of-sight occlusions.
 
-$$\mathbf{Security\ Event} \longrightarrow \mathbf{Incident} \longrightarrow \begin{cases} \mathbf{Alert} & \text{(Severity, Explanations, Operator Resolution)} \\ \mathbf{Evidence} & \text{(Verified Snapshot, MP4 Video, Audit Timeline)} \end{cases}$$
+### 2. Biometric Face Intelligence & Identity Layer
+- **Detection & Landmarks**: OpenCV YuNet neural network detecting faces with sub-millisecond inference and extracting 5 facial landmarks (eyes, nose tip, mouth corners).
+- **Quality Filtering**: Laplacian variance blur scoring, minimum face box size ($40\times40\,\text{px}$), and yaw/pitch orientation checks filter out degraded face crops.
+- **Feature Extraction**: OpenCV SFace generates 128-dimensional L2-normalized embeddings.
+- **Cosine Similarity Matching**: Computes cosine distance against enrolled active profiles; matches above threshold ($\ge 0.40$) resolve identity instantly.
+- **Unknown Clustering**: Automatically aggregates unrecognized faces into `PersonCluster` nodes via agglomerative similarity clustering without manual labeling.
 
-### High-Zone Entry Lifecycle Flow
+### 3. 7-Condition Optical Tamper Engine & 15s Circular Pre-Roll
+CUSTOS detects 7 distinct physical and signal tampering anomalies:
+1. **Lens Obstruction / Blur**: Drop in Laplacian variance below dynamic baseline.
+2. **Lens Covering / Blackout**: Sudden drop in mean pixel luminance ($< 15.0$).
+3. **Camera Displacement / Shift**: Background subtraction structural difference ($> 65\%$).
+4. **Video Signal Loss**: Feed disconnection, packet drops, or EOF conditions.
+5. **Frame Freezing**: Zero frame difference across consecutive intervals.
+6. **Optical Flare / Blinding**: Sudden extreme luminance spikes ($> 245.0$).
+7. **Darkness Shock**: Sudden global illumination loss.
+
+- **Temporal Confirmation**: Requires sustained anomaly duration ($0.8\,\text{s}$) to prevent momentary glitches from triggering false alarms.
+- **15s Circular Pre-Roll**: Circular RAM buffer continuously stores the preceding 450 frames. When tampering occurs, the final forensic video contains 15 seconds of pre-tamper footage, the tamper event, and recovery.
+
+### 4. Zero-Spam Incident Lifecycle & State Machine
+- **Deterministic Deduplication Key**:
+  - Intrusion: `("zone", camera_id, subject_id, zone_name, "ZONE_BREACH")`
+  - Tamper: `("tamper", camera_id, "TAMPER")`
+- **Single Canonical Alert**: An ongoing breach or camera covering maintains **ONE** canonical incident record. Dwell duration, risk scores, and event logs update in real time without creating duplicate alerts.
+- **Exit Grace Period**: Configurable grace window ($3.0\text{--}5.0\,\text{s}$) prevents track flicker from fragmenting single events into multiple records.
+
+### 5. Verifiable Evidence Capture Pipeline
+- **Dual Media Assets**: Captures both a high-resolution trigger JPEG snapshot and an assembled MP4 video clip.
+- **Integrity Validation**: Media is validated on disk (file existence, non-zero bytes, decode check) before state is set to `AVAILABLE`.
+- **Smart Path Resolver**: Path resolution automatically handles relocated project directories, ensuring legacy database records load reliably.
+
+---
+
+## 🖥 Web Command Center & User Interface
+
+The web interface is accessible via modern browsers at `http://localhost:5000`:
+
+| View | Purpose & Key Features |
+| :--- | :--- |
+| **Live Monitor** | Interactive dual-zone canvas drawing, high-framerate MJPEG stream, real-time bounding boxes, live threat gauges, and situation briefings. |
+| **Security Dashboard** | System overview, active situation briefings, threat curves, and 24-hour activity distribution. |
+| **Alert Center** | Server-side filtered alerts (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`), search, explainable AI reasons, and single-click operator resolution with audit notes. |
+| **Evidence Center** | Forensic video player, pre-roll playback, high-res snapshot inspector, chronological audit timelines, and single-click JSON evidence export. |
+| **People Intelligence** | Face gallery, known profile manager, suspicious watchlist catalog, reference photo enrollment, cluster-to-profile conversion, and cross-camera appearance history. |
+| **Security Analytics** | Risk trends, hourly incident density curves, and camera activity heatmaps. |
+
+---
+
+## 📁 Project Structure
+
 ```
-[ENTRY] Person enters HIGH Zone
-   │
-   ├── 1. Canonical Incident #101 created in SQLite
-   ├── 2. Exactly ONE Alert created and emitted over Socket.IO
-   ├── 3. Trigger Snapshot written to data/snapshots/incident_101_*.jpg and verified
-   └── 4. Video Recording initialized with 15s pre-event buffer
-   │
-[DWELL] Person remains in HIGH Zone (2 minutes)
-   │
-   ├── 1. Incident #101 dwell time, score, and timeline updated periodically
-   └── 2. ZERO additional alerts or database duplicate rows created
-   │
-[EXIT] Person exits HIGH Zone
-   │
-   ├── 1. Exit Grace Period (3.5 seconds) initiates
-   ├── 2. Post-event frames captured
-   ├── 3. MP4 Video encoded (data/snapshots/incident_101_*.mp4) & validated
-   ├── 4. Incident status marked 'Closed' and Evidence marked 'COMPLETE'
-   └── 5. Socket.IO emits 'incident_closed' and 'evidence_updated'
-   │
-[RE-ENTRY] Person enters HIGH Zone again
-   │
-   └── Brand NEW Incident #102 is created with fresh lifecycle
+custos-stage2.8/
+├── config/
+│   ├── __init__.py
+│   └── settings.py               # Centralized configuration & environment loader
+├── core/
+│   ├── __init__.py
+│   └── logging.py                # Colorized thread-safe logging framework
+├── data/
+│   ├── evidence/                 # Saved incident snapshots & MP4 videos
+│   ├── people/                   # Enrolled face profiles & cluster snapshots
+│   ├── recordings/               # Continuous recordings & pre-roll clips
+│   ├── snapshots/                # Periodic & trigger snapshots
+│   └── weights/                  # YOLOv8, YuNet, and SFace model weights
+├── database/
+│   ├── __init__.py
+│   ├── database_manager.py       # Thread-safe SQLite SQLAlchemy ORM manager
+│   └── models.py                 # Incident, Alert, PersonProfile, PersonFace, User models
+├── engine/
+│   ├── camera/
+│   │   ├── frame_buffer.py       # Rolling 15s circular in-memory frame buffer
+│   │   └── tamper_detector.py    # 7-condition optical tamper detection engine
+│   ├── evidence/
+│   │   ├── media_recorder.py     # Background MP4 video writer & trimmer
+│   │   ├── media_resolver.py     # Smart media path resolver
+│   │   └── media_validator.py    # On-disk file integrity validation
+│   ├── face/
+│   │   ├── face_engine.py        # YuNet detection + SFace recognition engine
+│   │   ├── face_quality.py       # Laplacian blur & orientation quality evaluator
+│   │   └── face_store.py         # Embedding cache & similarity search
+│   ├── incident/
+│   │   ├── incident_manager.py   # State machine, deduplication & lifecycle orchestrator
+│   │   └── risk_engine.py        # Threat score & severity evaluator
+│   ├── vision/
+│   │   ├── ai_engine.py          # Unified AI perception pipeline coordinator
+│   │   ├── detector.py           # YOLOv8 multi-class object perception
+│   │   ├── tracker.py            # Temporal track maintenance & smoothing
+│   │   └── zone_monitor.py       # Polygon containment & dwell calculation
+│   └── zone_store.py             # Thread-safe zone configuration storage
+├── frontend/
+│   ├── index.html                # Unified dark-mode Command Center application
+│   └── app.js                    # Core UI state & chart controller
+├── tests/                        # Comprehensive Pytest test suite (100% passing)
+├── web/
+│   ├── __init__.py
+│   └── server.py                 # Flask server, REST APIs, Socket.IO & Auth
+├── DEPLOYMENT.md                 # Production deployment & service installation guide
+├── requirements.txt              # Production Python dependencies
+├── run_server.py                 # Main entrypoint: starts full perception & web server
+└── run_debug.py                  # Headless debug mode for terminal testing
 ```
 
 ---
 
-## Project Structure
+## ⚙ Prerequisites & System Requirements
 
-```text
-custos-stage2.5/
-│
-├── run_production.py          # Root entry point (Production server with logging & background workers)
-├── run_server.py              # Lightweight server launcher
-│
-└── custos-stage2.5/           # Core Project Package
-    ├── .env.example           # Template for environment variables (Telegram token, Chat ID, Secret Keys)
-    ├── .gitignore             # Git ignore rules
-    ├── requirements.txt       # Python dependencies (PyTorch, Ultralytics, Flask, OpenCV, SQLAlchemy, etc.)
-    ├── DEPLOYMENT.md          # Production deployment guide
-    ├── README.md              # Project quickstart and comprehensive documentation
-    ├── run_production.py      # Production runner (initializes directories, cameras, workers, and SocketIO)
-    ├── run_server.py          # Development server runner
-    ├── run_debug.py           # Headless CLI debug runner (tests AI inference without Web UI)
-    │
-    ├── config/                # System Configuration
-    │   └── settings.py        # Centralized thresholds, zone multipliers, model paths, alert intervals
-    │
-    ├── engine/                # Core AI & Computer Vision Intelligence
-    │   ├── ai_engine.py           # High-level orchestrator connecting perception, tracking, and risk
-    │   ├── perception_engine.py   # YOLOv8 object detection layer (persons, vehicles, bags)
-    │   ├── detector.py            # Low-level model inference wrapper
-    │   ├── tracker.py             # Multi-object bounding-box tracking across frames
-    │   ├── tracking_engine.py     # Trajectory and velocity calculation
-    │   ├── behavior_engine.py     # Suspicious behavior heuristics (crouching, loitering, fast movement)
-    │   ├── behavior_analyzer.py   # Calibrated spatial & temporal movement analyzer
-    │   ├── zone_monitor.py        # Zone boundary checking (HIGH vs WATCH zones) & IoU overlap
-    │   ├── zone_selector.py       # GUI / interactive zone polygon definition
-    │   ├── zone_store.py          # Zone persistence & configuration loading
-    │   ├── risk_engine.py         # Real-time risk scoring engine (0-100 scale, decay, night multiplier)
-    │   ├── risk_explainer.py      # Evidence-backed risk explainability generator
-    │   ├── decision_engine.py     # Escalation logic (decides whether to alarm, snapshot, or notify)
-    │   ├── response_engine.py     # Dispatches actions based on decisions
-    │   ├── tamper_detector.py     # Lens occlusion, black screen, blur & optical tampering detection
-    │   ├── frame_buffer.py        # Dedicated rolling in-memory 15-second circular pre-tamper buffer
-    │   ├── media_recorder.py      # Frame capture, MP4 video encoding & disk validation
-    │   ├── incident_lifecycle.py  # Canonical Incident Lifecycle Manager (entry, dwell, exit, tamper)
-    │   ├── evidence_engine.py     # Snapshot generation & recording chunk manager
-    │   ├── evidence_cache.py      # Pre-event circular buffer for instant evidence capture
-    │   ├── evidence_deduplicator.py # Filters redundant alerts for the same incident
-    │   ├── camera_manager.py      # Multi-camera thread pool manager (Webcam 0, RTSP feeds)
-    │   ├── pipeline.py            # End-to-end frame processing loop
-    │   ├── health_monitor.py      # System FPS, CPU/GPU, and camera health monitor
-    │   ├── person_memory.py       # Short-term track memory across temporary occlusions
-    │   ├── storage_queue.py       # Asynchronous SQLite storage queue (non-blocking DB writes)
-    │   └── logger.py              # Structured application logger
-    │
-    ├── database/              # Persistence & ORM
-    │   ├── models.py              # SQLAlchemy schemas (Incident, Alert, Evidence, ThreatEvent, User, Zone)
-    │   └── database_manager.py    # Database connection manager, lifecycle updates & stats queries
-    │
-    ├── instance/              # Local Storage
-    │   └── custos.db              # SQLite Database storing threat records, zones, and user accounts
-    │
-    ├── web/                   # Web Server & Real-time Telemetry
-    │   ├── server.py              # Flask + Flask-SocketIO API, MJPEG video streaming, and auth routes
-    │   ├── alert_manager.py       # Telegram Bot notifications & WebSocket browser toast dispatcher
-    │   └── models.py              # API request/response schemas
-    │
-    ├── frontend/              # Command Center Web Dashboard
-    │   ├── index.html             # Unified Command Center (Live Monitor, Alert Center, Evidence Center)
-    │   └── app.js                 # Dashboard logic (Socket.IO client, zone canvas editor, audio alarms)
-    │
-    ├── data/                  # Assets & Binary Storage
-    │   ├── weights/yolov8n.pt     # YOLOv8 neural network weights
-    │   ├── snapshots/             # Verified JPG snapshots & MP4 video evidence
-    │   └── recordings/            # Continuous recording chunks
-    │
-    ├── docs/                  # Project Documentation
-    │   ├── Phase3_Planning.md     # Phase 3 feature breakdown & roadmap
-    │   └── changelog.md           # Version release log
-    │
-    └── tests/                 # Automated Test Suite (85/85 Passing)
-        ├── conftest.py            # Pytest fixtures & mock video feeds
-        ├── test_ai_engine.py
-        ├── test_alert_manager.py
-        ├── test_alerts_api.py
-        ├── test_behavior_analyzer.py
-        ├── test_end_to_end_integration.py
-        ├── test_evidence_api.py
-        ├── test_evidence_intelligence.py
-        ├── test_health_and_memory.py
-        ├── test_incident_lifecycle.py
-        ├── test_live_acceptance_pipeline.py
-        ├── test_media_recorder.py
-        ├── test_models.py
-        ├── test_real_world_acceptance.py
-        ├── test_real_world_simulation.py
-        ├── test_risk_explainability.py
-        ├── test_server_api.py
-        ├── test_storage_queue.py
-        ├── test_tamper_detector.py      # Optical condition checks & temporal state machine tests
-        ├── test_tamper_lifecycle.py     # Pre-tamper rolling buffer + MP4 video recording test
-        ├── test_vision_perception.py
-        ├── test_vision_tracking.py
-        ├── test_vision_zones.py
-        └── test_zone_store.py
-```
+### Hardware Requirements
+- **CPU**: Intel Core i5 / AMD Ryzen 5 or higher (Edge/x86_64)
+- **RAM**: Minimum 4 GB (8 GB recommended for 15s pre-roll buffer)
+- **Camera**: Standard USB Webcam, Integrated Camera, or RTSP IP Camera stream
+- **GPU (Optional)**: NVIDIA GPU with CUDA 11.8+ for hardware-accelerated YOLO & SFace inference
 
----
-
-## Prerequisites & Requirements
-
+### Software Requirements
 - **Operating System**: Windows 10/11, Ubuntu 20.04+, or macOS
-- **Python**: `3.8`, `3.9`, `3.10`, or `3.11`
-- **Video Input**: Standard USB Webcam (`0`), Integrated Laptop Camera, or RTSP Network Stream (`rtsp://...`)
-- **GPU (Optional)**: CUDA 11.8+ for accelerated YOLOv8 inference (CPU inference is fully supported by default)
+- **Python**: `3.8`, `3.9`, `3.10`, or `3.11` (Python 3.10 recommended)
+- **C++ Build Tools**: Required for OpenCV DNN modules
 
 ---
 
-## Installation & Setup
+## 📦 Installation & Setup Guide
 
-### 1. Clone or Extract the Repository
+### 1. Clone Repository & Navigate
 ```bash
-cd custos-stage2.5
+git clone https://github.com/your-org/custos.git
+cd custos-stage2.8
 ```
 
 ### 2. Create and Activate Virtual Environment
-**On Windows:**
-```cmd
-python -m venv venv
-venv\Scripts\activate
-```
-
-**On Linux / macOS:**
 ```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux / macOS
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
+### 3. Install Required Dependencies
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Verify YOLOv8 Weights
-Ensure `data/weights/yolov8n.pt` is present (the engine will automatically download the lightweight Nano weights if missing).
+### 4. Verify AI Model Weights
+Ensure the model weight files are located in `data/weights/`:
+- `yolov8n.pt` — YOLOv8 Nano object perception
+- `face_detection_yunet_2023mar.onnx` — YuNet face detection & landmarks
+- `face_recognition_sface_2021dec.onnx` — SFace 128-dim face embeddings
 
 ---
 
-## Running the Application
+## 🏃 Running the Application
 
-### Production Server (Recommended)
-```bash
-python run_production.py
-```
-
-### Development Server
+### Production Web Server & Real-Time Engine (Recommended)
 ```bash
 python run_server.py
 ```
+*Starts the camera capture thread, perception engine, SQLite database, Flask REST API, and Socket.IO real-time server on `http://localhost:5000`.*
 
-### Headless CLI Debug Mode (No Web UI)
+### Headless CLI Debug Mode (No Web Server)
 ```bash
 python run_debug.py
 ```
-
-After startup, open your browser and navigate to:
-```
-http://localhost:5000
-```
-
-### Default Authentication Credentials
-| Role | Username | Password |
-| :--- | :--- | :--- |
-| **System Administrator** | `admin` | `admin123` |
+*Runs perception and tamper detection directly inside an OpenCV window.*
 
 ---
 
-## Web Dashboard & Navigation
+## 🔐 Default Authentication & RBAC
 
-The CUSTOS Web Dashboard features three integrated views:
+CUSTOS enforces secure session authentication and Role-Based Access Control:
 
-### 1. Live Monitor
-- **Real-Time Video Feed**: High-framerate MJPEG stream with dynamic bounding boxes, track IDs, and risk gauges.
-- **Interactive Zone Drawer**: Click-and-drag to draw and configure **HIGH SECURITY** (Red) and **OBSERVATION** (Green) zones directly on the canvas.
-- **Situation Briefing**: Real-time natural language threat assessment and active track summary.
-
-### 2. Alert Center
-- **Server-Side Filter & Search**: Query alerts by Severity (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`), Status (`Active`, `Resolved`), Camera ID, Zone Name, and Date Range.
-- **Explainable Reasons & Recommended Action**: Clear breakdown of AI detection signals and recommended operator response.
-- **Operator Resolution**: Single-click alert resolution updating SQLite and broadcasting real-time status updates via Socket.IO.
-
-### 3. Evidence Center
-- **Verified Media Preview**: View trigger JPEG snapshots and stream validated MP4 video clips directly in the browser.
-- **Pre-Roll Playback**: Review pre-tamper and pre-intrusion footage recorded prior to alarm confirmation.
-- **Chronological Audit Timeline**: Second-by-second breakdown of entry, dwell, escalation, recovery, and closure events.
-- **Direct Export**: Download evidence packages for external reporting.
-
----
-
-## REST API Documentation
-
-All data endpoints require session authentication (or provide standard JSON error envelopes `{ "status": "error", "message": "..." }`).
-
-### Authentication
-- `POST /login` — Authenticate operator (`username`, `password`).
-- `GET /logout` — Terminate session.
-- `GET /api/auth/status` — Returns current authentication status and user metadata.
-
-### Alert Center Endpoints
-- `GET /api/alerts?page=1&limit=10&status=Active&severity=CRITICAL&search=zone` — Paginated, searchable alert records.
-- `GET /api/alerts/stats` — Real-time aggregate counts (`total_alerts`, `active_alerts`, `critical_alerts`, `today_alerts`, `resolved_alerts`).
-- `GET /api/alerts/<id>` — Retrieve single alert detail with linked incident metadata.
-- `POST /api/alerts/<id>/resolve` — Mark alert as resolved (`resolved_by`, `resolution_notes`).
-
-### Evidence Center Endpoints
-- `GET /api/evidence?page=1&limit=10&media_type=ALL&search=tamper` — Paginated evidence records.
-- `GET /api/evidence/stats` — Media stats (`total_records`, `total_snapshots`, `total_clips`, `tamper_count`).
-- `GET /api/evidence/<id>` — Complete evidence package with chronological timeline.
-- `GET /api/evidence/<id>/media/<type>` — Securely serves validated JPEG snapshots or MP4 videos (`image/jpeg` or `video/mp4`).
-- `POST /api/evidence/<id>/export` — Generates a downloadable JSON evidence export.
-
-### Zones & Live Ingestion Endpoints
-- `POST /api/zones` — Persist active zone coordinates and types (`[{ "x1": ..., "y1": ..., "x2": ..., "y2": ..., "type": "HIGH" }]`).
-- `POST /api/zones/clear` — Clear all defined zones for a camera.
-- `POST /api/monitoring/toggle` — Enable or disable active AI perception and risk scoring.
-- `GET /video_feed` — Stream live annotated MJPEG video.
-
----
-
-## Socket.IO Real-Time Events
-
-The backend emits structured, deduplicated events over WebSockets to synchronize the UI without page reloads:
-
-| Event Name | Direction | Payload | Description |
+| Role | Default Username | Default Password | Permissions |
 | :--- | :--- | :--- | :--- |
-| `alert_created` | Server $\rightarrow$ Client | Alert Dict | Emitted when a new canonical incident creates an active alert |
-| `alert_updated` | Server $\rightarrow$ Client | Alert Dict | Emitted when dwell duration or score updates |
-| `alert_resolved` | Server $\rightarrow$ Client | `{ "incident_id": ... }` | Emitted when an operator resolves an alert |
-| `evidence_created` | Server $\rightarrow$ Client | Evidence Dict | Emitted upon trigger snapshot generation |
-| `evidence_updated` | Server $\rightarrow$ Client | Evidence Dict | Emitted when MP4 video is finalized and validated |
-| `tamper_started` | Server $\rightarrow$ Client | `{ "camera_id": 0, "reasons": [...] }` | Emitted when optical tampering is confirmed |
-| `tamper_resolved` | Server $\rightarrow$ Client | `{ "camera_id": 0, "incident_id": ... }` | Emitted when camera view is restored |
-| `incident_closed` | Server $\rightarrow$ Client | `{ "incident_id": ..., "camera_id": 0 }` | Emitted when exit grace period concludes |
+| **Administrator** | `admin` | `Varun@admin` | Full access: user management, security config, face enrollment, incident resolution. |
+| **Operator** | `operator` | `operator123` | Operational access: live monitoring, zone setup, alert resolution, evidence export. |
+| **Viewer** | `viewer` | `viewer123` | Read-only access: live feed, read alerts, and view evidence. |
+
+> [!TIP]
+> Admin passwords can be customized anytime via `.env` using `CUSTOS_ADMIN_PASSWORD=YourPassword` or directly via the People & User settings.
 
 ---
 
-## Configuration & Environment Variables
+## 📡 REST API Reference
 
-System parameters are defined in [`config/settings.py`](file:///c:/Users/VARUN%20THEJ/Downloads/custos-folder/custos-stage2.5/custos-stage2.5/config/settings.py) and can be overridden via `.env`:
+All protected endpoints require an authenticated session or valid API token.
+
+### Authentication & Sessions
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/login` | Authenticate operator (`username`, `password`). |
+| `GET` | `/logout` | Invalidate current session. |
+| `GET` | `/api/auth/status` | Current authentication status and user details. |
+
+### Alerts & Incident Management
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/alerts` | Paginated alert records with status, severity, and camera filters. |
+| `GET` | `/api/alerts/stats` | Real-time counts (`total`, `active`, `critical`, `today`, `resolved`). |
+| `GET` | `/api/alerts/<id>` | Full alert detail with linked incident and event history. |
+| `POST` | `/api/alerts/<id>/resolve` | Mark alert as resolved with operator notes. |
+
+### People Intelligence & Biometrics
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/people` | Retrieve enrolled profiles with optional `include_inactive=true` filter. |
+| `GET` | `/api/people/stats` | Aggregate stats (`known_profiles`, `clusters`, `suspicious`, `appearances`). |
+| `GET` | `/api/people/suspicious` | Watchlist profiles flagged as `SUSPICIOUS`. |
+| `GET` | `/api/people/<person_id>` | Single person profile with reference photos & appearance history. |
+| `POST` | `/api/people/enroll` | Multipart upload to enroll a person (`photo`, `name`, `classification`, `notes`). |
+| `PATCH` | `/api/people/<person_id>` | Update name, classification (`KNOWN`, `UNKNOWN`, `SUSPICIOUS`), or status. |
+| `DELETE`| `/api/people/<person_id>` | Deactivate or delete person profile. |
+| `POST` | `/api/people/<person_id>/faces` | Add reference face photograph to existing profile. |
+| `DELETE`| `/api/people/<person_id>/faces/<face_id>` | Remove reference photo. |
+| `GET` | `/api/faces/clusters` | List detected unknown face clusters. |
+| `POST` | `/api/faces/clusters/<cluster_id>/profile` | Convert unknown face cluster into a named profile. |
+
+### Evidence Center
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/evidence` | Paginated evidence records with search and type filters. |
+| `GET` | `/api/evidence/stats` | Media asset metrics (`snapshots`, `clips`, `tamper_records`). |
+| `GET` | `/api/evidence/<id>` | Complete evidence dossier with chronological audit events. |
+| `GET` | `/api/evidence/<id>/media/<type>` | Stream verified JPEG snapshot or MP4 video. |
+| `POST` | `/api/evidence/<id>/export` | Generate downloadable JSON evidence bundle. |
+
+### Live Feeds & Zones
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/video_feed` | High-framerate annotated MJPEG video stream. |
+| `POST` | `/api/zones` | Save zone coordinates (`HIGH` / `WATCH` polygons). |
+| `POST` | `/api/zones/clear` | Clear all configured zones. |
+| `POST` | `/api/monitoring/toggle` | Enable / disable active AI perception engine. |
+
+---
+
+## ⚡ Socket.IO Real-Time Event Protocol
+
+The server broadcasts low-latency WebSocket events to synchronize all connected operator consoles:
+
+| Event Name | Direction | Description |
+| :--- | :--- | :--- |
+| `alert_created` | Server $\rightarrow$ Client | Emitted when a new security breach or tamper event creates an alert. |
+| `alert_updated` | Server $\rightarrow$ Client | Real-time dwell duration and threat score updates. |
+| `alert_resolved` | Server $\rightarrow$ Client | Broadcasts when an operator marks an alert as resolved. |
+| `evidence_created` | Server $\rightarrow$ Client | Emitted upon trigger JPEG snapshot generation. |
+| `evidence_updated` | Server $\rightarrow$ Client | Emitted when MP4 video recording is validated on disk. |
+| `person_profile_created` | Server $\rightarrow$ Client | Emitted when a new person is enrolled or converted from a cluster. |
+| `cluster_updated` | Server $\rightarrow$ Client | Emitted when a new face cluster is detected or updated. |
+| `tamper_started` | Server $\rightarrow$ Client | Instant alert when optical tampering is confirmed. |
+| `tamper_resolved` | Server $\rightarrow$ Client | Broadcasts when clear camera video view is restored. |
+
+---
+
+## 🛠 Configuration Reference
+
+All settings can be customized in [`config/settings.py`](file:///c:/Users/VARUN%20THEJ/Downloads/custos-folder/custos-stage2.8/custos-stage2.8/config/settings.py) or overridden using a `.env` file in the project root:
 
 ```ini
-# Camera & Video Ingestion
-CAMERA_SOURCE=0
-CAMERA_WARMUP_FRAMES=10
-CAMERA_TARGET_FPS=30
+# ================================================================
+# CAMERA & INGESTION
+# ================================================================
+CUSTOS_CAMERA_SOURCE=0                 # 0 for default USB webcam, or "rtsp://..."
+CUSTOS_CAMERA_TARGET_FPS=30            # Desired acquisition framerate
+CUSTOS_CAMERA_WARMUP_FRAMES=10         # Frames to discard during camera sensor warmup
 
-# Pre-Tamper & Rolling Buffer
-PRE_TAMPER_SECONDS=15.0
-TAMPER_CONFIRM_SECONDS=0.8
-TAMPER_RECOVERY_SECONDS=3.0
+# ================================================================
+# PRE-ROLL & TAMPER DETECTION
+# ================================================================
+CUSTOS_PRE_TAMPER_SECONDS=15.0         # Seconds of circular pre-roll footage
+CUSTOS_TAMPER_CONFIRM_SECONDS=0.8      # Duration anomaly must persist before trigger
+CUSTOS_TAMPER_RECOVERY_SECONDS=3.0     # Recovery duration before tamper resolves
 
-# Incident Lifecycle
-INCIDENT_EXIT_GRACE_SECONDS=3.5
-SNAPSHOT_DIR=data/snapshots
+# ================================================================
+# FACE INTELLIGENCE & BIOMETRICS
+# ================================================================
+CUSTOS_FACE_MATCH_THRESHOLD=0.40       # SFace cosine similarity threshold
+CUSTOS_FACE_MIN_SIZE=40                # Minimum face crop size (pixels)
+CUSTOS_FACE_MIN_QUALITY=15.0           # Laplacian variance blur quality threshold
 
-# Risk Engine Weights
-RISK_THRESHOLD_HIGH=70
-RISK_THRESHOLD_CRITICAL=85
-NIGHT_MODE_MULTIPLIER=1.3
-
-# Web Server
-PORT=5000
-SECRET_KEY=custos_production_secret_key_2026
+# ================================================================
+# SECURITY & DATABASE
+# ================================================================
+CUSTOS_SECRET_KEY=custos_production_secret_key_2026
+CUSTOS_ADMIN_PASSWORD=Varun@admin
+CUSTOS_DATABASE_URI=sqlite:///instance/custos.db
 ```
 
 ---
 
-## Automated Testing Suite
+## 🧪 Testing & Verification Protocol
 
-CUSTOS includes an automated test suite covering unit tests, API integration tests, and full end-to-end lifecycle verification.
+CUSTOS includes an automated test suite verifying all system components:
 
-### Run All Tests
 ```bash
-python -m pytest
-```
+# Run all unit, integration, and lifecycle tests
+pytest -v
 
-### Run Specific Test Modules
-```bash
-# Tamper lifecycle and 15s pre-roll validation
-python -m pytest tests/test_tamper_lifecycle.py -s
-
-# HIGH Zone breach lifecycle and deduplication
-python -m pytest tests/test_incident_lifecycle.py -s
-
-# End-to-end live pipeline acceptance
-python -m pytest tests/test_live_acceptance_pipeline.py -s
-
-# Media recorder snapshot & MP4 disk validation
-python -m pytest tests/test_media_recorder.py -s
-```
-
-### Test Suite Summary (85 / 85 Passing)
-```
-============================= 85 passed in 17.68s =============================
-tests\test_ai_engine.py ..................................               [ 18%]
-tests\test_end_to_end_integration.py ....................               [ 34%]
-tests\test_incident_lifecycle.py .                                       [ 41%]
-tests\test_live_acceptance_pipeline.py .                                 [ 42%]
-tests\test_media_recorder.py ...                                         [ 45%]
-tests\test_tamper_detector.py ...                                        [ 84%]
-tests\test_tamper_lifecycle.py .                                         [ 85%]
-tests\test_vision_perception.py ....                                     [ 90%]
-tests\test_vision_tracking.py ....                                       [ 95%]
-tests\test_vision_zones.py ...                                           [ 98%]
-tests\test_zone_store.py .                                               [100%]
+# Run specific test suites
+pytest tests/test_people_intelligence.py -v
+pytest tests/test_tamper_lifecycle.py -v
+pytest tests/test_incident_lifecycle.py -v
+pytest tests/test_hardening_regression.py -v
 ```
 
 ---
 
-## Real Camera Acceptance Test Protocol
+## 🚢 Production Deployment & Windows Service Setup
 
-Follow this procedure to validate the physical camera pipeline live:
+### Running as a Windows Background Service
+To configure CUSTOS to automatically start on system boot without user login, use NSSM (Non-Sucking Service Manager):
 
-### 1. Zone Intrusion & Deduplication Verification
-1. Launch CUSTOS: `python run_production.py`
-2. Open `http://localhost:5000` and log in with `admin` / `admin123`.
-3. In **Live Monitor**, draw a **HIGH SECURITY** zone across the middle of your camera view.
-4. Step into the HIGH zone:
-   - Verify **exactly ONE Alert** appears in Alert Center.
-   - Verify trigger snapshot is recorded.
-5. Remain standing inside the HIGH zone for 30–60 seconds:
-   - Verify **0 duplicate alerts** are created.
-   - Verify dwell duration and live score update continuously.
-6. Step out of the HIGH zone:
-   - Verify the incident closes after the 3.5-second grace period.
-   - Go to **Evidence Center** and play the finalized MP4 video clip.
+```cmd
+# 1. Download NSSM and open Administrator Command Prompt
+nssm install CustosSecurityEngine "C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\venv\Scripts\python.exe"
+nssm set CustosSecurityEngine AppParameters "run_server.py"
+nssm set CustosSecurityEngine AppDirectory "C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8"
+nssm set CustosSecurityEngine Start SERVICE_AUTO_START
 
-### 2. Tamper Detection & Pre-Tamper Footage Verification
-1. Let the camera run uncovered for at least $20\,\text{seconds}$ so the in-memory circular buffer fills.
-2. Physically cover the camera lens with your hand or a dark cloth.
-3. Observe:
-   - Tamper confirmation triggers after $0.8\,\text{s}$.
-   - **Exactly ONE Tamper Alert** is created in Alert Center.
-4. Keep the camera covered for $5\text{--}10\,\text{seconds}$ (0 duplicate alerts generated).
-5. Uncover the camera:
-   - Recovery detected after continuous healthy frames.
-   - Incident closes and MP4 video is finalized.
-6. Open **Evidence Center** $\rightarrow$ Tamper Record:
-   - Play the MP4 video: Confirm it clearly shows **10–15 seconds BEFORE the camera was covered**, the full tamper event, and the camera recovery.
+# 2. Start Service
+nssm start CustosSecurityEngine
+```
 
 ---
 
-## Windows Startup & Auto-Run Configuration
+## 📄 License
 
-To configure CUSTOS as a continuous Windows background service starting automatically at system boot:
-
-1. Press `Win + R`, type `taskschd.msc`, and press **Enter**.
-2. Click **Create Task** in the right Actions panel.
-3. **General Tab**:
-   - Name: `CUSTOS 2.7 AI Surveillance`
-   - Select **"Run whether user is logged on or not"**
-   - Check **"Run with highest privileges"**
-4. **Triggers Tab**:
-   - Click **New...** $\rightarrow$ Set *Begin the task* to **"At startup"**.
-5. **Actions Tab**:
-   - Click **New...** $\rightarrow$ Action: **"Start a program"**.
-   - Program: `cmd.exe`
-   - Arguments: `/c "cd /d C:\Path\To\custos-stage2.5 && venv\Scripts\python.exe run_production.py"`
-6. **Conditions Tab**:
-   - Uncheck *"Stop if the computer switches to battery power"*.
-7. Click **OK** and provide your Windows credentials.
-
----
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+CUSTOS is licensed under the [MIT License](LICENSE). Built for security and enterprise automation.

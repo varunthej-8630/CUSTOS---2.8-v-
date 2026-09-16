@@ -1,9 +1,11 @@
-# engine/detector.py — Deprecated compatibility wrapper for PerceptionEngine
-from engine.perception_engine import PerceptionEngine
+# engine.detector — Transparent module alias to engine.vision.detector
+import sys
+import engine.vision.detector as _target_module
 
-class ObjectDetector(PerceptionEngine):
-    """
-    Deprecated: Kept for backwards compatibility with legacy tests.
-    Use PerceptionEngine instead.
-    """
-    pass
+# Export all attributes to current module namespace
+for _k, _v in _target_module.__dict__.items():
+    if not _k.startswith('__'):
+        globals()[_k] = _v
+
+# Replace in sys.modules so monkeypatching and direct imports share the exact same module
+sys.modules[__name__] = _target_module

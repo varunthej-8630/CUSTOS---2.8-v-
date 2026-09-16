@@ -2,11 +2,12 @@ import os
 import json
 import threading
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 import numpy as np
 from database.models import (
     db, Incident, Subject, Evidence, BehaviorLog, User, UserRole,
-    PersonClassification, PersonProfile, PersonFace, PersonCluster, PersonAppearance
+    PersonClassification, PersonProfile, PersonFace, PersonCluster, PersonAppearance,
+    SecuritySituation, SecuritySituationState, RiskTrajectory, situation_incidents
 )
 from engine.logger import app_logger
 
@@ -52,7 +53,7 @@ class DatabaseManager:
             admin_user = User.query.filter_by(username='admin').first()
             if not admin_user:
                 # Only bootstrap default admin if no admin user exists
-                default_pass = os.getenv('CUSTOS_ADMIN_PASSWORD', 'admin123')
+                default_pass = os.getenv('CUSTOS_ADMIN_PASSWORD', 'Varun@admin')
                 admin_user = User(username='admin', email='admin@custos.local', role=UserRole.ADMIN)
                 admin_user.set_password(default_pass)
                 db.session.add(admin_user)
@@ -142,10 +143,10 @@ class DatabaseManager:
                     return None
 
     def update_incident_lifecycle(self, app, incident_id, snapshot_path=None, snapshot_status=None,
-                                 video_status=None, evidence_status=None, dwell_time=None,
+                                 clip_path=None, video_status=None, evidence_status=None, dwell_time=None,
                                  score=None, timeline=None, status=None):
         """
-        Updates ongoing active incident lifecycle fields (dwell time, score, live timeline, statuses).
+        Updates ongoing active incident lifecycle fields (dwell time, score, live timeline, statuses, clip/snapshot).
         """
         if not app or not incident_id:
             return False
@@ -159,6 +160,36 @@ class DatabaseManager:
 
                     if snapshot_path is not None:
                         inc.snapshot_path = snapshot_path
+                        if snapshot_path:
+                            ev_snap = Evidence.query.filter_by(incident_id=inc.id, type='snapshot').first()
+                            if not ev_snap:
+                                ev_snap = Evidence(
+                                    incident_id=inc.id,
+                                    type='snapshot',
+                                    path=snapshot_path,
+                                    timestamp=datetime.utcnow(),
+                                    metadata_json=inc.timeline_json
+                                )
+                                db.session.add(ev_snap)
+                            else:
+                                ev_snap.path = snapshot_path
+
+                    if clip_path is not None:
+                        inc.clip_path = clip_path
+                        if clip_path:
+                            ev_clip = Evidence.query.filter_by(incident_id=inc.id, type='clip').first()
+                            if not ev_clip:
+                                ev_clip = Evidence(
+                                    incident_id=inc.id,
+                                    type='clip',
+                                    path=clip_path,
+                                    timestamp=datetime.utcnow(),
+                                    metadata_json=inc.timeline_json
+                                )
+                                db.session.add(ev_clip)
+                            else:
+                                ev_clip.path = clip_path
+
                     if snapshot_status is not None:
                         inc.snapshot_status = snapshot_status
                     if video_status is not None:
@@ -499,6 +530,55 @@ class DatabaseManager:
                 'clips_count': clips_count,
                 'total_clips': clips_count,
                 'tamper_count': tamper_count
+            }
+
+    def get_analytics_stats(self, app):
+        with app.app_context():
+            total_incidents = Incident.query.count()
+            high_risk_incidents = Incident.query.filter(Incident.score >= 60.0).count()
+            peak_risk = db.session.query(db.func.max(Incident.score)).scalar() or 0.0
+            avg_risk = db.session.query(db.func.avg(Incident.score)).scalar() or 0.0
+
+            now = datetime.utcnow()
+            cutoff_24h = now - timedelta(hours=24)
+
+            # Fetch all incidents from the last 24 hours
+            recent_incidents = Incident.query.filter(Incident.timestamp >= cutoff_24h).order_by(Incident.timestamp.asc()).all()
+
+            # Build 24 hourly buckets (from 23 hours ago to current hour)
+            hourly_bins = []
+            for i in range(23, -1, -1):
+                slot_time = now - timedelta(hours=i)
+                slot_label = slot_time.strftime('%H:00')
+                start_slot = slot_time.replace(minute=0, second=0, microsecond=0)
+                end_slot = start_slot + timedelta(hours=1)
+
+                count = sum(1 for inc in recent_incidents if inc.timestamp and start_slot <= inc.timestamp < end_slot)
+                hourly_bins.append({
+                    'hour': slot_label,
+                    'count': count
+                })
+
+            # Build 24h risk history curve points
+            risk_history = []
+            for inc in recent_incidents:
+                risk_history.append({
+                    'timestamp': inc.timestamp.isoformat() if inc.timestamp else None,
+                    'time_display': inc.timestamp.strftime('%H:%M') if inc.timestamp else '',
+                    'score': round(inc.score or 0.0, 1),
+                    'severity': inc.severity,
+                    'incident_id': inc.id,
+                    'camera_id': inc.camera_id,
+                    'incident_type': inc.incident_type
+                })
+
+            return {
+                'total_incidents': total_incidents,
+                'high_risk_incidents': high_risk_incidents,
+                'peak_risk': round(peak_risk, 1),
+                'average_risk': round(avg_risk, 1),
+                'hourly_incidents': hourly_bins,
+                'risk_history_24h': risk_history
             }
 
     # ═══════════════════════════════════════════════════════════════
@@ -911,6 +991,12 @@ class DatabaseManager:
                 'pages': max(1, (total_count + limit - 1) // limit)
             }
 
+    def get_person_profile_by_id(self, app, person_id, include_appearances=False):
+        return self.get_person_profile(app, person_id, include_appearances=include_appearances)
+
+    def get_person_cluster_by_id(self, app, cluster_id):
+        return self.get_cluster_by_id(app, cluster_id)
+
     def get_suspicious_profiles(self, app):
         with app.app_context():
             profiles = PersonProfile.query.filter_by(status='ACTIVE', classification=PersonClassification.SUSPICIOUS).all()
@@ -930,5 +1016,247 @@ class DatabaseManager:
                 results.append(d)
             return results
 
+    # ═══════════════════════════════════════════════════════════════
+    # CUSTOS 2.8 — SECURITY SITUATION ENGINE (STAGE 2) DB METHODS
+    # ═══════════════════════════════════════════════════════════════
+
+    def save_or_update_situation(self, app, situation_data):
+        """
+        Thread-safe persistence of SecuritySituation records and linked incidents.
+        """
+        if not app or not situation_data:
+            return None
+
+        sit_id = situation_data.get('id')
+        if not sit_id:
+            sit_id = f"sit_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex[:6]}"
+
+        with app.app_context():
+            with self.lock:
+                try:
+                    now = datetime.utcnow()
+                    sit = db.session.get(SecuritySituation, sit_id)
+                    if not sit:
+                        started_at = situation_data.get('started_at') or now
+                        if isinstance(started_at, str):
+                            try: started_at = datetime.fromisoformat(started_at.replace('Z', '+00:00'))
+                            except Exception: started_at = now
+
+                        sit = SecuritySituation(
+                            id=sit_id,
+                            title=situation_data.get('title', 'Security Situation'),
+                            state=situation_data.get('state', SecuritySituationState.DEVELOPING),
+                            risk_score=float(situation_data.get('risk_score', 0.0)),
+                            risk_trajectory=situation_data.get('risk_trajectory', RiskTrajectory.STABLE),
+                            started_at=started_at,
+                            last_updated_at=now,
+                            primary_person_id=situation_data.get('primary_person_id'),
+                            primary_cluster_id=situation_data.get('primary_cluster_id'),
+                            primary_camera_id=int(situation_data.get('primary_camera_id', 0)),
+                            primary_zone_name=situation_data.get('primary_zone_name'),
+                            summary=situation_data.get('summary', ''),
+                            timeline_json=json.dumps(situation_data.get('timeline', [])) if isinstance(situation_data.get('timeline'), list) else situation_data.get('timeline_json', '[]'),
+                            risk_history_json=json.dumps(situation_data.get('risk_history', [])) if isinstance(situation_data.get('risk_history'), list) else situation_data.get('risk_history_json', '[]')
+                        )
+                        db.session.add(sit)
+                    else:
+                        if 'title' in situation_data:
+                            sit.title = situation_data['title']
+                        if 'state' in situation_data:
+                            sit.state = situation_data['state']
+                        if 'risk_score' in situation_data:
+                            sit.risk_score = float(situation_data['risk_score'])
+                        if 'risk_trajectory' in situation_data:
+                            sit.risk_trajectory = situation_data['risk_trajectory']
+                        if 'primary_person_id' in situation_data:
+                            sit.primary_person_id = situation_data['primary_person_id']
+                        if 'primary_cluster_id' in situation_data:
+                            sit.primary_cluster_id = situation_data['primary_cluster_id']
+                        if 'primary_camera_id' in situation_data:
+                            sit.primary_camera_id = int(situation_data['primary_camera_id'])
+                        if 'primary_zone_name' in situation_data:
+                            sit.primary_zone_name = situation_data['primary_zone_name']
+                        if 'summary' in situation_data:
+                            sit.summary = situation_data['summary']
+                        if 'timeline' in situation_data:
+                            sit.timeline_json = json.dumps(situation_data['timeline']) if isinstance(situation_data['timeline'], list) else str(situation_data['timeline'])
+                        if 'risk_history' in situation_data:
+                            sit.risk_history_json = json.dumps(situation_data['risk_history']) if isinstance(situation_data['risk_history'], list) else str(situation_data['risk_history'])
+                        sit.last_updated_at = now
+
+                    # Link incidents if provided
+                    incident_ids = situation_data.get('incident_ids', [])
+                    if incident_ids:
+                        existing_inc_ids = {inc.id for inc in sit.incidents}
+                        for inc_id in incident_ids:
+                            if inc_id not in existing_inc_ids:
+                                inc_obj = db.session.get(Incident, inc_id)
+                                if inc_obj:
+                                    sit.incidents.append(inc_obj)
+
+                    db.session.commit()
+                    return sit.id
+                except Exception as e:
+                    db.session.rollback()
+                    app_logger.error(f"[SITUATION_DB] Save/Update Situation Error: {e}")
+                    return None
+
+    def get_situation_by_id(self, app, situation_id, include_details=True):
+        if not app or not situation_id:
+            return None
+        with app.app_context():
+            sit = db.session.get(SecuritySituation, situation_id)
+            if not sit:
+                return None
+            return sit.to_dict(include_details=include_details)
+
+    def query_situations(self, app, filters=None):
+        filters = filters or {}
+        with app.app_context():
+            query = SecuritySituation.query
+
+            status_f = filters.get('status', '').lower()
+            if status_f == 'active':
+                query = query.filter(SecuritySituation.state != SecuritySituationState.RESOLVED)
+            elif status_f == 'resolved':
+                query = query.filter(SecuritySituation.state == SecuritySituationState.RESOLVED)
+
+            state_f = filters.get('state')
+            if state_f and state_f.upper() != 'ALL':
+                query = query.filter(SecuritySituation.state == state_f.upper())
+
+            camera_id = filters.get('camera_id')
+            if camera_id is not None and camera_id != '' and camera_id != 'all':
+                try:
+                    query = query.filter(SecuritySituation.primary_camera_id == int(camera_id))
+                except ValueError:
+                    pass
+
+            q = filters.get('q')
+            if q:
+                pattern = f"%{q}%"
+                query = query.filter(
+                    db.or_(
+                        SecuritySituation.title.ilike(pattern),
+                        SecuritySituation.summary.ilike(pattern),
+                        SecuritySituation.primary_zone_name.ilike(pattern)
+                    )
+                )
+
+            total_count = query.count()
+            page = max(1, int(filters.get('page', 1)))
+            limit = max(1, min(100, int(filters.get('limit', 20))))
+            offset = (page - 1) * limit
+
+            situations = query.order_by(SecuritySituation.last_updated_at.desc()).offset(offset).limit(limit).all()
+            return {
+                'items': [s.to_dict(include_details=False) for s in situations],
+                'total': total_count,
+                'page': page,
+                'limit': limit,
+                'pages': max(1, (total_count + limit - 1) // limit)
+            }
+
+    def get_active_situations(self, app):
+        """
+        Returns all active security situations sorted deterministically by operator priority:
+        Critical risk & rapidly increasing situations appear at the top.
+        """
+        if not app:
+            return []
+        with app.app_context():
+            active_sits = SecuritySituation.query.filter(
+                SecuritySituation.state != SecuritySituationState.RESOLVED
+            ).all()
+
+            def priority_key(sit):
+                base_score = sit.risk_score or 0.0
+                state_weight = 30.0 if sit.state == SecuritySituationState.CRITICAL else (
+                    20.0 if sit.state == SecuritySituationState.ESCALATING else (
+                        10.0 if sit.state == SecuritySituationState.DEVELOPING else 0.0
+                    )
+                )
+                traj_weight = 25.0 if sit.risk_trajectory == RiskTrajectory.RAPIDLY_INCREASING else (
+                    15.0 if sit.risk_trajectory == RiskTrajectory.INCREASING else (
+                        5.0 if sit.risk_trajectory == RiskTrajectory.STABLE else 0.0
+                    )
+                )
+                recency_weight = (sit.last_updated_at.timestamp() if sit.last_updated_at else 0) / 1000000.0
+                return (base_score + state_weight + traj_weight, recency_weight)
+
+            sorted_sits = sorted(active_sits, key=priority_key, reverse=True)
+            return [s.to_dict(include_details=True) for s in sorted_sits]
+
+    def resolve_situation(self, app, situation_id, user_id=None, notes=None):
+        if not app or not situation_id:
+            return None
+        with app.app_context():
+            with self.lock:
+                try:
+                    sit = db.session.get(SecuritySituation, situation_id)
+                    if not sit:
+                        return None
+
+                    now = datetime.utcnow()
+                    sit.state = SecuritySituationState.RESOLVED
+                    sit.resolved_at = now
+                    sit.last_updated_at = now
+
+                    tl = sit.get_timeline()
+                    tl.append({
+                        'step': len(tl) + 1,
+                        'time': now.strftime("%H:%M:%S"),
+                        'event': f"Security situation resolved by operator{' (' + notes + ')' if notes else ''}.",
+                        'severity': 'LOW'
+                    })
+                    sit.timeline_json = json.dumps(tl)
+
+                    db.session.commit()
+                    return sit.to_dict(include_details=True)
+                except Exception as e:
+                    db.session.rollback()
+                    app_logger.error(f"[SITUATION_DB] Resolve Situation Error: {e}")
+                    return None
+
+    def link_incident_to_situation(self, app, situation_id, incident_id):
+        if not app or not situation_id or not incident_id:
+            return False
+        with app.app_context():
+            with self.lock:
+                try:
+                    sit = db.session.get(SecuritySituation, situation_id)
+                    inc = db.session.get(Incident, incident_id)
+                    if not sit or not inc:
+                        return False
+
+                    if inc not in sit.incidents:
+                        sit.incidents.append(inc)
+                        sit.last_updated_at = datetime.utcnow()
+                        db.session.commit()
+                    return True
+                except Exception as e:
+                    db.session.rollback()
+                    app_logger.error(f"[SITUATION_DB] Link Incident Error: {e}")
+                    return False
+
+    def get_situation_stats(self, app):
+        if not app:
+            return {}
+        with app.app_context():
+            total = SecuritySituation.query.count()
+            active = SecuritySituation.query.filter(SecuritySituation.state != SecuritySituationState.RESOLVED).count()
+            escalating = SecuritySituation.query.filter(SecuritySituation.state == SecuritySituationState.ESCALATING).count()
+            critical = SecuritySituation.query.filter(SecuritySituation.state == SecuritySituationState.CRITICAL).count()
+            resolved = SecuritySituation.query.filter(SecuritySituation.state == SecuritySituationState.RESOLVED).count()
+
+            return {
+                'total_situations': total,
+                'active_situations': active,
+                'escalating_situations': escalating,
+                'critical_situations': critical,
+                'resolved_situations': resolved
+            }
+
 db_manager = DatabaseManager()
+
 

@@ -1,31 +1,11 @@
-# engine/behavior_engine.py — Compatibility Bridge for BehaviorEngine
-from engine.behavior_analyzer import BehaviorAnalyzer
+# engine.behavior_engine — Transparent module alias to engine.behavior.behavior_engine
+import sys
+import engine.behavior.behavior_engine as _target_module
 
-class BehaviorEngine:
-    """
-    Deprecated bridge: Maps legacy BehaviorEngine.process() to BehaviorAnalyzer.
-    Unvalidated heuristics (crouching, pacing, erratic, freeze) are marked DISABLED.
-    """
-    def __init__(self):
-        self.analyzer = BehaviorAnalyzer()
+# Export all attributes to current module namespace
+for _k, _v in _target_module.__dict__.items():
+    if not _k.startswith('__'):
+        globals()[_k] = _v
 
-    def process(self, tracks):
-        res = self.analyzer.process(tracks)
-        results = []
-        for t in res['tracks']:
-            results.append({
-                'track_id': t.get('track_id', 0),
-                'box': t.get('bbox', t.get('box', [])),
-                'foot_x': t.get('foot_x', 0),
-                'foot_y': t.get('foot_y', 0),
-                'movement': t.get('speed', 0.0),
-                'dwell_time': t.get('dwell_time', 0.0),
-                # Legacy unvalidated flags default to False
-                'is_running': t.get('speed', 0.0) > 25.0,
-                'is_erratic': False,
-                'is_frozen': False,
-                'is_pacing': False,
-                'is_crouching': False,
-                'active_behaviors': t.get('behaviors', [])
-            })
-        return results
+# Replace in sys.modules so monkeypatching and direct imports share the exact same module
+sys.modules[__name__] = _target_module

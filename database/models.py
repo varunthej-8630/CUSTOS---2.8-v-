@@ -3,6 +3,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from engine.media_resolver import resolve_media_file
 
 db = SQLAlchemy()
 
@@ -211,8 +212,10 @@ class Incident(db.Model):
             title = 'Perimeter Observation Alert'
             short_desc = f'Activity detected in {self.zone_name or "Observation Zone"}.'
 
-        has_snap = bool(self.snapshot_path and self.snapshot_status != 'FAILED')
-        has_clip = bool(self.clip_path and self.video_status != 'FAILED')
+        snap_resolved = resolve_media_file(self.snapshot_path)
+        clip_resolved = resolve_media_file(self.clip_path)
+        has_snap = bool(snap_resolved and self.snapshot_status != 'FAILED')
+        has_clip = bool(clip_resolved and self.video_status != 'FAILED')
 
         return {
             'id': self.id,
@@ -243,6 +246,7 @@ class Incident(db.Model):
             'evidence_status': self.evidence_status or 'PENDING',
             'snapshot_url': f'/api/evidence/{self.id}/media/snapshot' if has_snap else None,
             'clip_url': f'/api/evidence/{self.id}/media/clip' if has_clip else None,
+            'evidence': [e.to_dict() for e in (self.evidence_items or [])],
             'closed_at': self.closed_at.isoformat() if self.closed_at else None,
             'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None,
             'notes': self.notes or ''
@@ -265,8 +269,10 @@ class Incident(db.Model):
                 {'time': ts_str, 'event': f'Security threshold reached: Score {round(self.score or 0)}', 'severity': self.severity}
             ]
 
-        has_snap = bool(self.snapshot_path and self.snapshot_status != 'FAILED')
-        has_clip = bool(self.clip_path and self.video_status != 'FAILED')
+        snap_resolved = resolve_media_file(self.snapshot_path)
+        clip_resolved = resolve_media_file(self.clip_path)
+        has_snap = bool(snap_resolved and self.snapshot_status != 'FAILED')
+        has_clip = bool(clip_resolved and self.video_status != 'FAILED')
 
         return {
             'id': self.id,
@@ -429,6 +435,41 @@ class PersonProfile(db.Model):
             data['appearances'] = [app.to_dict() for app in sorted(self.appearances, key=lambda x: x.timestamp or datetime.min, reverse=True)]
             data['reference_faces'] = [f.to_dict() for f in active_faces]
 
+            # Gather linked real incidents
+            incidents_dict = {}
+            for app in (self.appearances or []):
+                if getattr(app, 'incident', None):
+                    incidents_dict[app.incident.id] = app.incident
+
+            try:
+                subject_incidents = Incident.query.filter(
+                    (Incident.subject_id == self.id) |
+                    (Incident.subject_id == f"Person-{self.id}")
+                ).all()
+                for inc in subject_incidents:
+                    incidents_dict[inc.id] = inc
+            except Exception:
+                pass
+
+            sorted_incidents = sorted(incidents_dict.values(), key=lambda x: x.timestamp or datetime.min, reverse=True)
+            data['incidents'] = [inc.to_alert_dict() for inc in sorted_incidents]
+
+            if sorted_incidents:
+                scores = [inc.score for inc in sorted_incidents if inc.score is not None]
+                data['risk_context'] = {
+                    'incident_count': len(sorted_incidents),
+                    'highest_risk': round(max(scores), 1) if scores else 0.0,
+                    'average_risk': round(sum(scores) / len(scores), 1) if scores else 0.0,
+                    'highest_severity': 'CRITICAL' if any(s >= 80 for s in scores) else 'HIGH' if any(s >= 60 for s in scores) else 'MEDIUM' if any(s >= 40 for s in scores) else 'LOW'
+                }
+            else:
+                data['risk_context'] = {
+                    'incident_count': 0,
+                    'highest_risk': 0.0,
+                    'average_risk': 0.0,
+                    'highest_severity': 'SAFE'
+                }
+
         return data
 
 
@@ -511,10 +552,28 @@ class PersonAppearance(db.Model):
     snapshot_path = db.Column(db.String(255), nullable=True)
     incident_id = db.Column(db.Integer, db.ForeignKey('incidents.id', ondelete='SET NULL'), nullable=True, index=True)
 
+    incident = db.relationship('Incident', foreign_keys=[incident_id], lazy='select')
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def to_dict(self):
+        snap_resolved = resolve_media_file(self.snapshot_path)
+        has_snap = bool(snap_resolved)
+
+        has_clip = False
+        clip_url = None
+        inc_score = None
+        inc_type = None
+        inc_sev = None
+        if self.incident:
+            clip_resolved = resolve_media_file(self.incident.clip_path)
+            has_clip = bool(clip_resolved and self.incident.video_status != 'FAILED')
+            clip_url = f"/api/evidence/{self.incident.id}/media/clip" if has_clip else None
+            inc_score = round(self.incident.score or 0.0, 1)
+            inc_type = self.incident.incident_type
+            inc_sev = self.incident.severity
+
         return {
             'id': self.id,
             'person_id': self.person_id,
@@ -528,8 +587,172 @@ class PersonAppearance(db.Model):
             'zone_name': self.zone_name or 'Observation Area',
             'recognition_score': round(self.recognition_score or 0.0, 2),
             'identity_status': self.identity_status or 'UNKNOWN',
-            'has_snapshot': bool(self.snapshot_path),
-            'snapshot_url': f"/api/people/appearances/{self.id}/media" if self.snapshot_path else None,
-            'incident_id': self.incident_id
+            'has_snapshot': has_snap,
+            'snapshot_url': f"/api/people/appearances/{self.id}/media" if has_snap else None,
+            'incident_id': self.incident_id,
+            'has_clip': has_clip,
+            'clip_url': clip_url,
+            'incident_type': inc_type,
+            'incident_score': inc_score,
+            'incident_severity': inc_sev
         }
+
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOS 2.8 — SECURITY SITUATION ENGINE (STAGE 2)
+# ═══════════════════════════════════════════════════════════════
+
+class SecuritySituationState:
+    DEVELOPING = 'DEVELOPING'
+    ESCALATING = 'ESCALATING'
+    CRITICAL = 'CRITICAL'
+    STABLE = 'STABLE'
+    RESOLVING = 'RESOLVING'
+    RESOLVED = 'RESOLVED'
+
+
+class RiskTrajectory:
+    STABLE = 'STABLE'
+    INCREASING = 'INCREASING'
+    RAPIDLY_INCREASING = 'RAPIDLY_INCREASING'
+    DECREASING = 'DECREASING'
+    RAPIDLY_DECREASING = 'RAPIDLY_DECREASING'
+
+
+situation_incidents = db.Table(
+    'situation_incidents',
+    db.Column('situation_id', db.String(64), db.ForeignKey('security_situations.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('incident_id', db.Integer, db.ForeignKey('incidents.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('linked_at', db.DateTime, default=datetime.utcnow)
+)
+
+
+class SecuritySituation(db.Model):
+    __tablename__ = 'security_situations'
+
+    id = db.Column(db.String(64), primary_key=True) # e.g. sit_20260914_001
+    title = db.Column(db.String(128), nullable=False, index=True)
+    state = db.Column(db.String(32), default=SecuritySituationState.DEVELOPING, index=True)
+    risk_score = db.Column(db.Float, default=0.0, index=True)
+    risk_trajectory = db.Column(db.String(32), default=RiskTrajectory.STABLE, index=True)
+
+    started_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    last_updated_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    resolved_at = db.Column(db.DateTime, nullable=True)
+
+    primary_person_id = db.Column(db.String(64), db.ForeignKey('person_profiles.id', ondelete='SET NULL'), nullable=True, index=True)
+    primary_cluster_id = db.Column(db.String(64), db.ForeignKey('person_clusters.id', ondelete='SET NULL'), nullable=True, index=True)
+    primary_camera_id = db.Column(db.Integer, default=0, index=True)
+    primary_zone_name = db.Column(db.String(64), nullable=True)
+
+    summary = db.Column(db.Text, nullable=True)
+    timeline_json = db.Column(db.Text, nullable=True)
+    risk_history_json = db.Column(db.Text, nullable=True)
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    primary_person = db.relationship('PersonProfile', foreign_keys=[primary_person_id], lazy='select')
+    primary_cluster = db.relationship('PersonCluster', foreign_keys=[primary_cluster_id], lazy='select')
+    incidents = db.relationship('Incident', secondary=situation_incidents, backref=db.backref('situations', lazy='select'), lazy='select')
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    @property
+    def is_active(self):
+        return self.state != SecuritySituationState.RESOLVED
+
+    def get_timeline(self):
+        if not self.timeline_json:
+            return []
+        try:
+            import json
+            if isinstance(self.timeline_json, str):
+                return json.loads(self.timeline_json)
+            elif isinstance(self.timeline_json, list):
+                return self.timeline_json
+        except Exception:
+            return []
+        return []
+
+    def get_risk_history(self):
+        if not self.risk_history_json:
+            return []
+        try:
+            import json
+            if isinstance(self.risk_history_json, str):
+                return json.loads(self.risk_history_json)
+            elif isinstance(self.risk_history_json, list):
+                return self.risk_history_json
+        except Exception:
+            return []
+        return []
+
+    def to_dict(self, include_details=False):
+        import json
+        timeline = self.get_timeline()
+        risk_history = self.get_risk_history()
+        linked_incidents = list(self.incidents or [])
+
+        # Check evidence availability across linked incidents
+        has_any_snap = any(bool(inc.snapshot_path and inc.snapshot_status != 'FAILED') for inc in linked_incidents)
+        has_any_clip = any(bool(inc.clip_path and inc.video_status != 'FAILED') for inc in linked_incidents)
+
+        # Primary entity representation
+        person_name = None
+        person_classification = None
+        if self.primary_person:
+            person_name = self.primary_person.name
+            person_classification = self.primary_person.classification
+        elif self.primary_cluster:
+            person_name = self.primary_cluster.cluster_code
+            person_classification = 'UNKNOWN'
+
+        camera_name = 'Built-in Camera' if self.primary_camera_id == 0 else f'Camera {self.primary_camera_id + 1}'
+
+        data = {
+            'id': self.id,
+            'title': self.title,
+            'state': self.state or SecuritySituationState.DEVELOPING,
+            'risk_score': round(self.risk_score or 0.0, 1),
+            'risk_trajectory': self.risk_trajectory or RiskTrajectory.STABLE,
+            'started_at': self.started_at.isoformat() if self.started_at else None,
+            'last_updated_at': self.last_updated_at.isoformat() if self.last_updated_at else None,
+            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None,
+            'started_time_display': self.started_at.strftime('%d %b %Y, %I:%M %p') if self.started_at else '',
+            'last_updated_display': self.last_updated_at.strftime('%I:%M:%S %p') if self.last_updated_at else '',
+            'primary_person_id': self.primary_person_id,
+            'primary_cluster_id': self.primary_cluster_id,
+            'person_id': self.primary_person_id,
+            'cluster_id': self.primary_cluster_id,
+            'person_name': person_name,
+            'person_classification': person_classification,
+            'primary_camera_id': self.primary_camera_id,
+            'camera_name': camera_name,
+            'primary_zone_name': self.primary_zone_name or 'Monitored Perimeter',
+            'summary': self.summary or '',
+            'timeline': timeline,
+            'risk_history': risk_history,
+            'related_incident_count': len(linked_incidents),
+            'has_snapshot': has_any_snap,
+            'has_clip': has_any_clip,
+            'has_evidence': has_any_snap or has_any_clip,
+            'is_active': self.is_active
+        }
+
+        if include_details:
+            # Sort linked incidents chronologically
+            sorted_incidents = sorted(linked_incidents, key=lambda x: x.timestamp or datetime.min)
+            data['incidents'] = [inc.to_alert_dict() for inc in sorted_incidents]
+
+            # Gather all evidence records across linked incidents
+            evidence_items = []
+            for inc in sorted_incidents:
+                for ev in (inc.evidence_items or []):
+                    evidence_items.append(ev.to_dict())
+            data['evidence'] = evidence_items
+
+        return data
+
 

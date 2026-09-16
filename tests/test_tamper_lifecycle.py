@@ -92,7 +92,25 @@ def test_tamper_full_preroll_and_lifecycle(app_ctx):
     snap_full_path = os.path.join(media_recorder.snapshot_dir, snap_filename)
     assert os.path.exists(snap_full_path)
     assert os.path.getsize(snap_full_path) > 0
-    
+
+    # Verify Pre-Event Video Clip is generated and available immediately upon tamper detection
+    with app_ctx.app_context():
+        inc_active = db.session.get(Incident, tamper_inc_id)
+        assert inc_active is not None
+        assert inc_active.video_status == 'AVAILABLE'
+        assert inc_active.evidence_status == 'COMPLETE'
+        assert inc_active.clip_path != ''
+
+        # Verify pre-event MP4 exists on disk and is readable
+        mp4_active_path = os.path.join(media_recorder.snapshot_dir, inc_active.clip_path)
+        assert os.path.exists(mp4_active_path)
+        assert os.path.getsize(mp4_active_path) > 0
+
+        val_active = media_recorder.validate_video(mp4_active_path)
+        assert val_active.valid is True
+        assert val_active.frame_count >= 150
+        assert val_active.duration_sec > 5.0
+
     # C. Camera remains covered for 30 consecutive frames (Continuous Tamper)
     for i in range(30):
         t_curr = t_start_tamper + 0.5 + (i * 0.1)

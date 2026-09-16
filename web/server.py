@@ -22,6 +22,7 @@ from database import (
 from database.database_manager import parse_events
 from engine.storage_queue import storage_queue
 from engine.face_engine import face_engine
+from engine.media_resolver import resolve_media_file
 
 
 # Suppress OpenCV's verbose MSMF/DSHOW warning spam in the terminal
@@ -320,6 +321,10 @@ def resolve_alert_endpoint(alert_id):
     notes = data.get('notes', '')
     user_id = current_user.id if current_user.is_authenticated else None
     
+    # Finalize any active recording session (e.g. active tamper or breach video)
+    from engine.incident_lifecycle import incident_lifecycle_mgr
+    incident_lifecycle_mgr.force_resolve_session(alert_id)
+
     updated_alert = db_manager.resolve_alert(app, alert_id, user_id=user_id, notes=notes)
     if not updated_alert:
         return jsonify({
@@ -342,6 +347,15 @@ def resolve_alert_endpoint(alert_id):
 @login_required
 def get_alerts_stats():
     stats = db_manager.get_alerts_stats(app)
+    return jsonify({
+        'success': True,
+        'data': stats
+    })
+
+@app.route('/api/analytics/stats', methods=['GET'])
+@login_required
+def get_analytics_stats_endpoint():
+    stats = db_manager.get_analytics_stats(app)
     return jsonify({
         'success': True,
         'data': stats
@@ -393,46 +407,124 @@ def serve_evidence_media(evidence_id, media_type):
     from flask import send_file
     inc = db.session.get(Incident, evidence_id)
     if not inc:
+        # Also check Evidence table directly if queried by evidence ID
+        ev = db.session.get(Evidence, evidence_id)
+        if ev:
+            inc = ev.incident
+
+    if not inc:
         return jsonify({
             'success': False,
             'error': {'code': 'EVIDENCE_NOT_FOUND', 'message': 'Evidence record was not found.'}
         }), 404
 
-    filename = ''
+    target_raw = None
     if media_type in ('snapshot', 'image', 'thumb'):
-        filename = inc.snapshot_path
+        target_raw = inc.snapshot_path
     elif media_type in ('clip', 'video'):
-        filename = inc.clip_path
+        target_raw = inc.clip_path
     else:
         return jsonify({
             'success': False,
             'error': {'code': 'INVALID_MEDIA_TYPE', 'message': 'Media type must be snapshot or clip.'}
         }), 400
 
-    if not filename:
+    target_path = resolve_media_file(target_raw)
+    if not target_path:
+        app_logger.warning(f"[MEDIA_SERVING_404] Incident #{evidence_id} {media_type} not found on disk: {target_raw}")
         return jsonify({
             'success': False,
             'error': {'code': 'MEDIA_UNAVAILABLE', 'message': 'Evidence media file is unavailable.'}
         }), 404
 
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), config.SNAPSHOT_DIR))
-    safe_filename = os.path.basename(filename)
-    target_path = os.path.abspath(os.path.join(base_dir, safe_filename))
-
-    # Path traversal check
-    if not target_path.startswith(base_dir) or not os.path.exists(target_path):
-        return jsonify({
-            'success': False,
-            'error': {'code': 'MEDIA_NOT_FOUND', 'message': 'Requested media file not found on disk.'}
-        }), 404
-
-    mimetype = 'image/jpeg' if safe_filename.endswith(('.jpg', '.jpeg', '.png')) else 'video/mp4'
+    mimetype = 'video/mp4' if target_path.lower().endswith(('.mp4', '.m4v', '.mov', '.webm')) else 'image/jpeg'
     return send_file(target_path, mimetype=mimetype, conditional=True)
 
 @app.route('/api/evidence/stats', methods=['GET'])
 @login_required
 def get_evidence_stats():
     stats = db_manager.get_evidence_stats(app)
+    return jsonify({
+        'success': True,
+        'data': stats
+    })
+
+
+# ═══════════════════════════════════════════════════════
+# CUSTOS 2.8 — SECURITY SITUATION ENGINE APIS (STAGE 2)
+# ═══════════════════════════════════════════════════════
+
+@app.route('/api/situations', methods=['GET'])
+@login_required
+def get_situations():
+    filters = {
+        'status': request.args.get('status', ''),
+        'state': request.args.get('state', ''),
+        'trajectory': request.args.get('trajectory', ''),
+        'camera_id': request.args.get('camera_id', ''),
+        'zone_name': request.args.get('zone_name', ''),
+        'person_id': request.args.get('person_id', ''),
+        'q': request.args.get('q', ''),
+        'page': request.args.get('page', 1, type=int),
+        'limit': request.args.get('limit', 20, type=int)
+    }
+    result = db_manager.query_situations(app, filters)
+    return jsonify({
+        'success': True,
+        'data': result
+    })
+
+@app.route('/api/situations/active', methods=['GET'])
+@login_required
+def get_active_situations_endpoint():
+    situations = db_manager.get_active_situations(app)
+    return jsonify({
+        'success': True,
+        'data': {
+            'situations': situations,
+            'items': situations,
+            'total': len(situations),
+            'count': len(situations)
+        }
+    })
+
+@app.route('/api/situations/<string:situation_id>', methods=['GET'])
+@login_required
+def get_situation_detail(situation_id):
+    sit = db_manager.get_situation_by_id(app, situation_id, include_details=True)
+    if not sit:
+        return jsonify({
+            'success': False,
+            'error': {'code': 'SITUATION_NOT_FOUND', 'message': f"Situation '{situation_id}' was not found."}
+        }), 404
+    return jsonify({
+        'success': True,
+        'data': sit
+    })
+
+@app.route('/api/situations/<string:situation_id>/resolve', methods=['POST'])
+@login_required
+def resolve_situation_endpoint(situation_id):
+    data = request.get_json(silent=True) or {}
+    notes = data.get('notes', '')
+    user_id = current_user.id if current_user.is_authenticated else None
+    res = db_manager.resolve_situation(app, situation_id, user_id=user_id, notes=notes)
+    if not res:
+        return jsonify({
+            'success': False,
+            'error': {'code': 'SITUATION_NOT_FOUND', 'message': f"Situation '{situation_id}' was not found or could not be resolved."}
+        }), 404
+
+    socket.emit('situation_resolved', res)
+    return jsonify({
+        'success': True,
+        'data': res
+    })
+
+@app.route('/api/situations/stats', methods=['GET'])
+@login_required
+def get_situation_stats_endpoint():
+    stats = db_manager.get_situation_stats(app)
     return jsonify({
         'success': True,
         'data': stats
@@ -826,14 +918,18 @@ def _serve_safe_file(file_path, default_mime='image/jpeg'):
     if not file_path:
         return jsonify({'success': False, 'error': {'code': 'MEDIA_UNAVAILABLE', 'message': 'Media not found.'}}), 404
 
-    base_project_dir = os.path.abspath(_PROJECT_ROOT)
-    target_path = os.path.abspath(file_path)
-
-    # Path traversal check
-    if not target_path.startswith(base_project_dir) or not os.path.exists(target_path):
+    target_path = resolve_media_file(file_path)
+    if not target_path:
         return jsonify({'success': False, 'error': {'code': 'FILE_NOT_FOUND', 'message': 'Media file missing on disk.'}}), 404
 
-    return send_file(target_path, mimetype=default_mime, conditional=True)
+    if target_path.lower().endswith(('.mp4', '.m4v', '.mov', '.webm')):
+        mimetype = 'video/mp4'
+    elif target_path.lower().endswith('.png'):
+        mimetype = 'image/png'
+    else:
+        mimetype = default_mime
+
+    return send_file(target_path, mimetype=mimetype, conditional=True)
 
 @app.route('/api/people/<string:person_id>/media/<string:media_type>', methods=['GET'])
 @login_required
@@ -876,7 +972,6 @@ def serve_appearance_media(appearance_id):
 
 
 # ═══════════════════════════════════════════════════════
-
 # BACKWARD COMPATIBILITY ENDPOINTS
 # ═══════════════════════════════════════════════════════
 

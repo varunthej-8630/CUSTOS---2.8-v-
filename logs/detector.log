@@ -344,3 +344,349 @@
 2026-08-24 00:04:04 | INFO    | Detector   | Perception Engine Ready!
 2026-08-26 18:14:26 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
 2026-08-26 18:14:26 | INFO    | Detector   | Perception Engine Ready!
+2026-08-27 16:01:01 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-08-27 16:01:02 | INFO    | Detector   | Perception Engine Ready!
+2026-08-28 09:47:57 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-08-28 09:47:57 | INFO    | Detector   | Perception Engine Ready!
+2026-09-03 14:47:04 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-03 14:47:04 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:27:26 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:27:26 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:27:43 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:27:43 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:27:43 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:27:43 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:27:43 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:27:43 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:27:43 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:27:43 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:29:37 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:29:37 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:29:54 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:29:54 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:29:54 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:29:54 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:29:54 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:29:54 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:29:54 | INFO    | Detector   | Loading Perception Model: data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:29:54 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:46:57 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:46:57 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:11 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:11 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:11 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:11 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:11 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:11 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:11 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:11 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:27 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:27 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:47:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:47:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:48:03 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:48:03 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:48:19 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:48:19 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:48:19 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:48:19 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:48:19 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:48:19 | INFO    | Detector   | Perception Engine Ready!
+2026-09-06 04:48:19 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-06 04:48:19 | INFO    | Detector   | Perception Engine Ready!
+2026-09-07 15:24:55 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-07 15:24:55 | INFO    | Detector   | Perception Engine Ready!
+2026-09-07 15:55:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-07 15:55:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-07 15:55:16 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-07 15:55:17 | INFO    | Detector   | Perception Engine Ready!
+2026-09-07 15:55:17 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-07 15:55:17 | INFO    | Detector   | Perception Engine Ready!
+2026-09-07 15:55:17 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-07 15:55:17 | INFO    | Detector   | Perception Engine Ready!
+2026-09-07 15:55:17 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-07 15:55:17 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 00:51:15 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 00:51:15 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 00:51:37 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 00:51:37 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 00:51:37 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 00:51:37 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 00:51:37 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 00:51:37 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 00:51:38 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 00:51:38 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:37:41 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:37:41 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:38:11 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:38:11 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:38:45 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:38:45 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:38:45 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:38:45 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:38:45 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:38:45 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:38:45 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:38:45 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:39:11 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:39:12 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:39:41 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:39:41 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:40:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:40:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:40:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:40:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:40:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:40:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:40:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:40:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:40:17 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:40:17 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:42:27 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:42:27 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:42:39 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:42:39 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:42:56 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:42:56 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:43:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:43:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 01:43:31 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 01:43:31 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 02:03:28 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 02:03:28 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 02:04:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 02:04:01 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 02:04:01 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 02:04:01 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 02:04:01 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 02:04:01 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 02:04:01 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 02:04:01 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:00:12 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:00:12 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:00:32 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:00:32 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:00:32 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:00:32 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:00:32 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:00:32 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:00:32 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:00:32 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:00:49 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:00:49 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:01:07 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:01:07 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:01:07 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:01:07 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:01:07 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:01:07 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:01:07 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:01:07 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 03:07:43 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 03:07:43 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:16:28 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:16:28 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:16:37 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:16:37 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:46:56 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:46:56 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:47:10 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:47:10 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:47:23 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:47:23 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:47:35 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:47:35 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:47:48 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:47:48 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:48:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:48:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:48:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:48:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:48:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:48:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:48:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:48:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:48:33 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:48:33 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:56:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:56:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:56:12 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:56:12 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:56:33 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:56:34 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:56:34 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:56:34 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:56:34 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:56:34 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:56:34 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:56:34 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 04:57:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 04:57:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:26:04 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:26:04 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:29:14 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:29:14 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:29:51 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:29:51 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:31:33 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:31:33 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:33:40 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:33:40 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:34:43 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:34:43 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:36:03 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:36:03 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:36:36 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:36:36 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:39:42 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:39:42 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:43:28 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:43:28 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:43:52 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:43:52 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:43:52 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:43:52 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:43:52 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:43:52 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:43:52 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:43:52 | INFO    | Detector   | Perception Engine Ready!
+2026-09-14 05:57:38 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-14 05:57:38 | INFO    | Detector   | Perception Engine Ready!
+2026-09-15 20:56:49 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-15 20:56:49 | INFO    | Detector   | Perception Engine Ready!
+2026-09-15 20:57:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-15 20:57:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-15 20:57:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-15 20:57:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-15 20:57:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-15 20:57:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-15 20:57:13 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-15 20:57:13 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:39:22 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:39:22 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:40:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:40:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:41:16 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:41:16 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:41:16 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:41:16 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:41:16 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:41:16 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:41:16 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:41:16 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:49:15 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:49:15 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:49:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:49:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:49:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:49:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:49:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:49:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:49:44 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:49:44 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:54:18 | INFO    | Detector   | Loading Perception Model: c:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:54:18 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:54:47 | INFO    | Detector   | Loading Perception Model: c:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:54:48 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:55:33 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:55:33 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:56:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:56:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:56:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:56:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:56:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:56:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 14:56:00 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 14:56:00 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:00:41 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:00:41 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:01:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:01:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:01:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:01:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:01:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:01:10 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:01:10 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:01:10 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:02:52 | INFO    | Detector   | Loading Perception Model: c:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:02:52 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:04:55 | INFO    | Detector   | Loading Perception Model: c:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:04:55 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:05:29 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:05:29 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:05:58 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:05:58 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:05:58 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:05:58 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:05:58 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:05:58 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:05:59 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:05:59 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 15:06:17 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 15:06:17 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 20:07:03 | INFO    | Detector   | Loading Perception Model: c:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 20:07:03 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:20:14 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:20:14 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:20:39 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:20:39 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:20:39 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:20:39 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:20:39 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:20:39 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:20:39 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:20:40 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:21:54 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:21:54 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:25:08 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:25:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:27:07 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:27:07 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:27:29 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:27:29 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:27:29 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:27:29 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:27:29 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:27:29 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:27:29 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:27:29 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:28:16 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:28:16 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:31:22 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:31:22 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 21:35:05 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.9\custos-stage2.9\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 21:35:05 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:10:01 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:10:02 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:10:38 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:10:38 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:14:30 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:14:30 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:15:26 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:15:26 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:15:52 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:15:52 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:16:37 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:16:37 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:17:45 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:17:45 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:19:21 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:19:21 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:24:07 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:24:07 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:25:54 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:25:55 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:26:09 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:26:09 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:29:20 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:29:20 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:30:24 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:30:24 | INFO    | Detector   | Perception Engine Ready!
+2026-09-16 22:32:37 | INFO    | Detector   | Loading Perception Model: C:\Users\VARUN THEJ\Downloads\custos-folder\custos-stage2.8\custos-stage2.8\data/weights/yolov8n.pt (conf=0.4, size=480)
+2026-09-16 22:32:37 | INFO    | Detector   | Perception Engine Ready!
