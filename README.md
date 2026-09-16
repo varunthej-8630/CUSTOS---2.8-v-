@@ -392,7 +392,7 @@ CUSTOS_FACE_MIN_QUALITY=15.0           # Laplacian variance blur quality thresho
 # SECURITY & DATABASE
 # ================================================================
 CUSTOS_SECRET_KEY=custos_production_secret_key_2026
-CUSTOS_ADMIN_PASSWORD=Varun@admin
+CUSTOS_ADMIN_PASSWORD= txt me i will tell
 CUSTOS_DATABASE_URI=sqlite:///instance/custos.db
 ```
 
